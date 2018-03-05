@@ -1,0 +1,6 @@
+<h1>Featured</h1>
+<ul class="list-group">
+  <li *ngFor="let item of items | async" class="list-group-item">
+    <memory-card [item]="item" ></memory-card>
+  </li>
+</ul>

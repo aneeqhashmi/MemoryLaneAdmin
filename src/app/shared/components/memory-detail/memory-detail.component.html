@@ -1,0 +1,10 @@
+<h2>{{this.memory.Name}}</h2>
+<div style="margin-bottom:10px;">
+  <button (click)="addToFeature()" class="btn btn-default" *ngIf="this.isFeatured == false">Add to Feature</button>
+  <button (click)="removeFromFeature()" class="btn btn-default" *ngIf="this.isFeatured == true">Remove from Feature</button>
+</div>
+<ks-modal-gallery 
+    *ngIf="this.images.length > 0" 
+    [plainGalleryConfig]="plainGalleryGrid"
+    [modalImages]="this.images" >
+</ks-modal-gallery>

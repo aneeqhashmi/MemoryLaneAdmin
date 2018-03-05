@@ -1,0 +1,7 @@
+<div style="display:inline-block; vertical-align:top;">
+  <h3><a [routerLink]="['/memory',key]">{{value.Name}}</a></h3>
+  <span>{{value.Modified | amTimeAgo}}</span>
+</div>
+<div *ngIf="this.shouldDisplayFeatureIcon && this.isFeatured" style="vertical-align:middle; float:right;">
+  <img *ngIf="this.isFeatured" src="https://media.giphy.com/media/Q7fPnEbRydrjy/giphy.gif" style="width:200px;">
+</div>

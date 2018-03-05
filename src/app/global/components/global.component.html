@@ -1,0 +1,6 @@
+<h1>Global</h1>
+<ul class="list-group">
+  <li *ngFor="let item of items | async" class="list-group-item">
+    <memory-card [item]="item" [shouldDisplayFeatureIcon]="true" ></memory-card>
+  </li>
+</ul>
