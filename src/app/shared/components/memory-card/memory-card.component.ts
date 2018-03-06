@@ -30,8 +30,11 @@ export class MemoryCardComponent {
   }
 
   censorMemory(){
-    this.af.object('FeaturedShare/'+this.key).remove();
-    this.af.object('MemoryShareGlobal/'+this.key).remove();
+    if(confirm('Are you really want to delete this memory?'))
+    {
+      this.af.object('FeaturedShare/'+this.key).remove();
+      this.af.object('MemoryShareGlobal/'+this.key).remove();
+    }
   }
 }
 
