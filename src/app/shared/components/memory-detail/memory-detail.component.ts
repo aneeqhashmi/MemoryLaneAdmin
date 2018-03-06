@@ -98,8 +98,10 @@ export class MemoryDetailComponent {
 
   private getImagesFromPolyAsset(imgs){
     var thumbnails = [];
+    var count = this.images.length;
     imgs.forEach(element => {
-      thumbnails.unshift(this.getImageFromPhotoType(thumbnails.length+1,element));
+      count++;
+      thumbnails.unshift(this.getImageFromPhotoType(count,element));
     });
     return thumbnails;
   }
