@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PlainGalleryStrategy, PlainGalleryConfig, GridLayout } from 'angular-modal-gallery';
+import { PolyManagerService } from './../../services/poly-manager.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'memory-detail',
@@ -24,7 +26,10 @@ export class MemoryDetailComponent {
   };
   
   constructor(public af: AngularFireDatabase,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+             public polyManager: PolyManagerService,
+             private spinnerService: Ng4LoadingSpinnerService) {
+    
   }
 
   ngOnInit() {
@@ -54,33 +59,59 @@ export class MemoryDetailComponent {
   }
 
   getImages(){
-    var count = 0;
+    this.spinnerService.show();
+    var promises = [];
     this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
       this.memory = memory;
       var jsonData = JSON.parse(memory['Json']);
-      
+      // console.log(jsonData.Objects);
         jsonData.Objects.forEach(element => {
           switch (element.ObjectType) {
             case 'Photo':
-                count++;
-                const newImage = {
-                  id:count,
-                  modal: {
-                    img: element.PhotoDefinition.Url
-                  },
-                  plain: {
-                    img: element.PhotoDefinition.Url
-                  }
-                };
-                this.images.unshift(newImage);
+                this.images.unshift(this.getImageFromPhotoType(this.images.length+1,element.PhotoDefinition.Url));
               break;
-          
+            case 'PolyAsset':
+                promises.push(this.polyManager.getImageFromPolyAsset(element.PolyAssetName));
+              break;
             default:
+              console.log(element.ObjectType+' not supported');
               break;
           }
         });
-      
+        
+        if(promises.length > 0){
+          Promise.all(promises).then(urls => {
+            this.images = this.images.concat(this.getImagesFromPolyAsset(urls));
+            this.spinnerService.hide();
+          }).catch((err) => {
+            console.log('Fail to get thumbnail urls for all poly assets: '+err);
+            this.spinnerService.hide();
+          });
+        } else {
+          this.spinnerService.hide();
+        }
+        
     });
+  }
+
+  private getImagesFromPolyAsset(imgs){
+    var thumbnails = [];
+    imgs.forEach(element => {
+      thumbnails.unshift(this.getImageFromPhotoType(thumbnails.length+1,element));
+    });
+    return thumbnails;
+  }
+
+  getImageFromPhotoType(count,img){
+    return {
+      id:count,
+      modal: {
+        img: img
+      },
+      plain: {
+        img: img
+      }
+    };
   }
 }
 

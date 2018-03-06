@@ -13,6 +13,8 @@ import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messag
 import { AppComponent } from './components/app.component';
 import { environment } from './../../environments/environment';
 import {ModalGalleryModule} from 'angular-modal-gallery';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+
 import { routing } from './app.routing';
 
 import { GlobalModule } from './../global/global.module';
@@ -26,6 +28,7 @@ import { FeaturedModule } from './../featured/featured.module';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     ModalGalleryModule.forRoot(),
+    Ng4LoadingSpinnerModule.forRoot(),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     RouterModule,

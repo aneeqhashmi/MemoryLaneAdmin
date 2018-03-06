@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MemoryCardComponent } from './components/memory-card/memory-card.component';
 import { MemoryDetailComponent } from './components/memory-detail/memory-detail.component';
+import { PolyManagerService } from './services/poly-manager.service';
 import { MomentModule } from 'angular2-moment';
 import { RouterModule } from '@angular/router';
 import { ModalGalleryModule } from 'angular-modal-gallery';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -14,7 +16,8 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
     ReactiveFormsModule,
     MomentModule,
     RouterModule,
-    ModalGalleryModule
+    ModalGalleryModule,
+    HttpClientModule
   ],
   declarations: [
     MemoryCardComponent,
@@ -25,7 +28,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
     MemoryDetailComponent
   ],
   providers: [
-    
+    PolyManagerService
   ]
 })
 export class SharedModule { }
