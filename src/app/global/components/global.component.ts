@@ -16,8 +16,7 @@ export class GlobalComponent {
 
   constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase) {
     
-    this.items = af.list<any>('MemoryShareGlobal').snapshotChanges();
-    //, ref => ref.orderByChild()
+    this.items = af.list<any>('MemoryShareGlobal', ref => ref.orderByChild('Modified')).snapshotChanges();
 
   }
 }

@@ -16,7 +16,7 @@ export class FeaturedComponent {
 
   constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase) {
     
-    this.items = af.list<any>('FeaturedShare').snapshotChanges();
+    this.items = af.list<any>('FeaturedShare', ref => ref.orderByChild('Modified')).snapshotChanges();
 
   }
 }
