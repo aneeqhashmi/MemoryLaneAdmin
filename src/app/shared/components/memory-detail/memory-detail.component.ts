@@ -61,7 +61,9 @@ export class MemoryDetailComponent {
   getImages(){
     this.spinnerService.show();
     var promises = [];
-    this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
+    const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
+      subObj.unsubscribe();
+      
       this.memory = memory;
       var jsonData = JSON.parse(memory['Json']);
       // console.log(jsonData.Objects);

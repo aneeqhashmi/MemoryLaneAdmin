@@ -29,5 +29,9 @@ export class MemoryCardComponent {
     });
   }
 
+  censorMemory(){
+    this.af.object('FeaturedShare/'+this.key).remove();
+    this.af.object('MemoryShareGlobal/'+this.key).remove();
+  }
 }
 
