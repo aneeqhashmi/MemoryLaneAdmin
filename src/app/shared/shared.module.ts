@@ -8,6 +8,7 @@ import { MomentModule } from 'angular2-moment';
 import { RouterModule } from '@angular/router';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { HttpClientModule } from '@angular/common/http';
+import {  } from 'ng-prettyjson';
 
 @NgModule({
   imports: [

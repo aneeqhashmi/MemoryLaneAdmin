@@ -6,10 +6,10 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyBZWRZbnv7J6evozXPfY7j89zZoyaD-CUU",
-    authDomain: "content-spatial-1513935922342.firebaseio.com",
-    databaseURL: "https://content-spatial-1513935922342.firebaseio.com",
-    storageBucket: "content-spatial--1513935922342.appspot.com",
-    messagingSenderId: "912425775126"
+    apiKey: "AIzaSyA_cqjChN2GPylkbnc9rZkkcaV9XGc1WWY",
+    authDomain: "memorylane-dev.firebaseio.com",
+    databaseURL: "https://memorylane-dev.firebaseio.com",
+    storageBucket: "memorylane-dev.appspot.com",
+    messagingSenderId: "108511672750"
   }
 };

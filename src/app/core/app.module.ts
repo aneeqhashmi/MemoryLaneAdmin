@@ -19,6 +19,7 @@ import { routing } from './app.routing';
 
 import { GlobalModule } from './../global/global.module';
 import { FeaturedModule } from './../featured/featured.module';
+import { AuthModule, AuthGuard, UnauthGuard } from './../auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -35,9 +36,10 @@ import { FeaturedModule } from './../featured/featured.module';
     FlashMessagesModule,
     GlobalModule,
     FeaturedModule,
+    AuthModule,
     routing
   ],
-  providers: [FlashMessagesService],
+  providers: [FlashMessagesService, AuthGuard, UnauthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,8 +3,23 @@
   <button (click)="addToFeature()" class="btn btn-default" *ngIf="this.isFeatured == false">Add to Feature</button>
   <button (click)="removeFromFeature()" class="btn btn-default" *ngIf="this.isFeatured == true">Remove from Feature</button>
 </div>
+<div class="my-app-custom-plain-container-with-desc">
+  <ng-container *ngFor="let img of images">
+    <figure class="my-app-custom-image-with-desc">
+      <img [src]="img.modal.img"
+           (click)="openImageModalRowDescription(img)"/>
+      <figcaption class="description">{{img.modal.description ? img.modal.description : 'No description available'}}
+      </figcaption>
+    </figure>
+  </ng-container>
+</div>
 <ks-modal-gallery 
     *ngIf="this.images.length > 0" 
-    [plainGalleryConfig]="plainGalleryGrid"
-    [modalImages]="this.images" >
+    [plainGalleryConfig]="customPlainGalleryRowDescConfig"
+    [modalImages]="this.images">
 </ks-modal-gallery>
+<br/>
+<h3>Raw Json</h3>
+<div>
+  <pre>{{this.prettyJson}}</pre>
+</div>

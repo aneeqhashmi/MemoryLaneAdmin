@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 
@@ -16,7 +17,16 @@ export class AppComponent {
   items: AngularFireList<any[]>;
   msgVal: string = '';
 
-  constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase) {
+  constructor(private afAuth: AngularFireAuth, private router:Router) {
     
+  }
+
+  logout(){
+    
+    this.afAuth.auth.signOut().then(onfulfiled => {
+      console.log('signout');
+      this.router.navigate(['/login']);
+    });
+
   }
 }

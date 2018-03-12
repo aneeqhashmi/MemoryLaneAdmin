@@ -1,6 +1,10 @@
 <h1>Global</h1>
-<ul class="list-group">
+<button *ngIf="prevModified != null" (click)="getItems(1,prevModified);">Previous Page</button> 
+<button *ngIf="nextModified != null" (click)="getItems(0,nextModified);">Next Page</button> 
+<ul style="margin-top:10px;" class="list-group">
   <li *ngFor="let item of (items | async)?.reverse()" class="list-group-item">
     <memory-card [item]="item" [shouldDisplayFeatureIcon]="true" ></memory-card>
   </li>
 </ul>
+<button *ngIf="prevModified != null" (click)="getItems(1,prevModified);">Previous Page</button> 
+<button *ngIf="nextModified != null" (click)="getItems(0,nextModified);">Next Page</button> 
