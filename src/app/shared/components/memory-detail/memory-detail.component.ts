@@ -54,11 +54,19 @@ export class MemoryDetailComponent {
     });
   }
 
+  review(){
+    this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(true);
+  }
+
+  unreview(){
+    this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(false);
+  }
+
   getImages(){
     this.spinnerService.show();
     var promises = [];
     const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
-      subObj.unsubscribe();
+      //subObj.unsubscribe();
       
       this.memory = memory;
       var jsonData = JSON.parse(memory['Json']);

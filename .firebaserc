@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "content-spatial--1513935922342"
+    "default": "memorylane-dev",
+    "prod": "content-spatial--1513935922342"
   }
 }
