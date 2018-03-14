@@ -1,15 +1,17 @@
 <h1>Global</h1>
-<button *ngIf="prevModified != null" (click)="getAllItems(1);">Previous Page</button> 
-<button *ngIf="nextModified != null" (click)="getAllItems(0);">Next Page</button> 
-<div>
-  <input (click)="filter(0)" type="radio" name="filter" checked="checked"> Show All
-  <input (click)="filter(1)" type="radio" name="filter"> Reviewed
-  <input (click)="filter(2)" type="radio" name="filter"> Un Reviewed
+<div style="height:35px;">
+  <button *ngIf="prevModified != null" (click)="getItems(1);">Previous Page</button> 
+  <button *ngIf="nextModified != null" (click)="getItems(0);">Next Page</button> 
+  <div style="float:right;">
+    <input (click)="getItems(0,0)" type="radio" name="filter" checked="checked"> Show All
+    <input (click)="getItems(0,1)" type="radio" name="filter"> Reviewed
+    <input (click)="getItems(0,2)" type="radio" name="filter"> Un Reviewed
+  </div>
 </div>
 <ul style="margin-top:10px;" class="list-group">
   <li *ngFor="let item of (items | async)?.reverse()" class="list-group-item">
     <memory-card [item]="item" [shouldDisplayFeatureIcon]="true" ></memory-card>
   </li>
 </ul>
-<button *ngIf="prevModified != null" (click)="getAllItems(1);">Previous Page</button> 
-<button *ngIf="nextModified != null" (click)="getAllItems(0);">Next Page</button> 
+<button *ngIf="prevModified != null" (click)="getItems(1);">Previous Page</button> 
+<button *ngIf="nextModified != null" (click)="getItems(0);">Next Page</button> 

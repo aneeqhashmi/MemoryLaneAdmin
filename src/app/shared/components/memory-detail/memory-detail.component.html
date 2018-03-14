@@ -8,6 +8,11 @@
   <button (click)="removeFromFeature()" class="btn btn-default" *ngIf="this.isFeatured == true">Remove from Feature</button>
   <button (click)="review()" class="btn btn-default" *ngIf="this.memory.Reviewed == null || !this.memory.Reviewed">Mark Reviewed</button>
   <button (click)="unreview()" class="btn btn-default" *ngIf="this.memory.Reviewed">Mark UnReviewed</button>
+  
+  <div style="float:right;">
+    <a [routerLink]="['/memory',this.prevUnreviewedId]" class="btn btn-default" *ngIf="this.prevUnreviewedId" >Prev Unreviewed</a>
+    <a [routerLink]="['/memory',this.nextUnreviewedId]" class="btn btn-default" *ngIf="this.nextUnreviewedId" >Next Unreviewed</a>
+  </div>
 </div>
 <div class="my-app-custom-plain-container-with-desc">
   <ng-container *ngFor="let img of images">

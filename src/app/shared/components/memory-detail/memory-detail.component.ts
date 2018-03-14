@@ -20,6 +20,8 @@ export class MemoryDetailComponent {
   prettyJson = '';
   isFeatured:boolean = false;
   uid = '';
+  nextUnreviewedId = null;
+  prevUnreviewedId = null;
   
   constructor(public af: AngularFireDatabase,
               private route: ActivatedRoute,
@@ -36,6 +38,8 @@ export class MemoryDetailComponent {
       this.getImages();
       
       this.featureCheck();
+
+      this.getUnreviewedIds();
 
   });
   }
@@ -74,6 +78,32 @@ export class MemoryDetailComponent {
     const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
       subObj.unsubscribe();
       this.memory = memory;
+    });
+  }
+
+  getUnreviewedIds(){
+    this.af.list<any>('MemoryShareGlobal', ref => ref.orderByChild('Reviewed').endAt(false,this.uid).limitToLast(2)).snapshotChanges().subscribe(data=>{
+      //console.log(data);
+      if(data.length > 1){
+        if(data[0].payload.val().Reviewed == false)
+          this.nextUnreviewedId = data[0].key;
+        else
+          this.nextUnreviewedId = null;  
+      } else {
+        this.nextUnreviewedId = null;
+      } 
+    });
+    
+    this.af.list<any>('MemoryShareGlobal', ref => ref.orderByChild('Reviewed').startAt(false,this.uid).limitToFirst(2)).snapshotChanges().subscribe(data=>{
+      console.log(data);
+      if(data.length > 1){
+        if(data[1].payload.val().Reviewed == false)
+          this.prevUnreviewedId = data[1].key;
+        else
+          this.prevUnreviewedId = null;  
+      } else {
+        this.prevUnreviewedId = null;
+      }
     });
   }
 
