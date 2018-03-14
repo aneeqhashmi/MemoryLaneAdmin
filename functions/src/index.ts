@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 
 exports.getGlobal = functions.https.onRequest((req, res) => {
   
-  const ref = admin.database().ref('MemoryShareGlobal').orderByChild('Modified');
+  const ref = admin.database().ref('MemoryShareGlobal').orderByChild('Modified').limitToFirst(100);
 
   ref.on("value", function(snapshot) {
     res.send(snapshot.val());
@@ -17,7 +17,7 @@ exports.getGlobal = functions.https.onRequest((req, res) => {
 
 exports.getFeatured = functions.https.onRequest((req, res) => {
   
-  const ref = admin.database().ref('FeaturedShare').orderByChild('Modified');
+  const ref = admin.database().ref('FeaturedShare').orderByChild('Modified').limitToFirst(100);
   
   ref.on("value", function(snapshot) {
     res.send(snapshot.val());

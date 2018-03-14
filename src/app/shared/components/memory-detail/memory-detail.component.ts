@@ -69,11 +69,9 @@ export class MemoryDetailComponent {
   markReview(isReviewed){
     this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(isReviewed);
     this.af.object('FeaturedShare/'+this.uid).valueChanges().subscribe(data => {
-      this.af.object('FeaturedShare/'+this.uid).valueChanges().subscribe(data => {
-        if(data != null){
-          this.af.object('FeaturedShare/'+this.uid+'/Reviewed').set(isReviewed);
-        }
-      });
+      if(data != null){
+        this.af.object('FeaturedShare/'+this.uid+'/Reviewed').set(isReviewed);
+      }
     });
     const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
       subObj.unsubscribe();
