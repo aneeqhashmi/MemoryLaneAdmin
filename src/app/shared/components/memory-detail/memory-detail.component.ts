@@ -55,18 +55,33 @@ export class MemoryDetailComponent {
   }
 
   review(){
-    this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(true);
+    this.markReview(true);
   }
 
   unreview(){
-    this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(false);
+    this.markReview(false);
+  }
+
+  markReview(isReviewed){
+    this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(isReviewed);
+    this.af.object('FeaturedShare/'+this.uid).valueChanges().subscribe(data => {
+      this.af.object('FeaturedShare/'+this.uid).valueChanges().subscribe(data => {
+        if(data != null){
+          this.af.object('FeaturedShare/'+this.uid+'/Reviewed').set(isReviewed);
+        }
+      });
+    });
+    const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
+      subObj.unsubscribe();
+      this.memory = memory;
+    });
   }
 
   getImages(){
     this.spinnerService.show();
     var promises = [];
     const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
-      //subObj.unsubscribe();
+      subObj.unsubscribe();
       
       this.memory = memory;
       var jsonData = JSON.parse(memory['Json']);

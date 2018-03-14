@@ -12,6 +12,20 @@ exports.getGlobal = functions.https.onRequest((req, res) => {
         console.log("The read failed: " + errorObject.code);
     });
 });
+exports.markUnReviewed = functions.https.onRequest((req, res) => {
+    const ref = admin.database().ref('MemoryShareGlobal');
+    ref.on("value", function (snapshot) {
+        snapshot.forEach(element => {
+            console.log(element.val().Reviewed);
+            if (element.val().Reviewed == undefined) {
+                console.log(element.key);
+            }
+        });
+        res.end();
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+});
 exports.getFeatured = functions.https.onRequest((req, res) => {
     const ref = admin.database().ref('FeaturedShare').orderByChild('Modified');
     ref.on("value", function (snapshot) {

@@ -15,7 +15,6 @@ exports.getGlobal = functions.https.onRequest((req, res) => {
   });  
 });
 
-
 exports.getFeatured = functions.https.onRequest((req, res) => {
   
   const ref = admin.database().ref('FeaturedShare').orderByChild('Modified');
@@ -26,6 +25,3 @@ exports.getFeatured = functions.https.onRequest((req, res) => {
     console.log("The read failed: " + errorObject.code);
   });  
 });
-
-console.log(functions.config().firebase);
-
