@@ -18,21 +18,22 @@ admin.initializeApp({
     }),
     databaseURL: `https://memorylane-dev.firebaseio.com`
 });
-const ref = admin.database().ref('MemoryShareGlobal');
+console.log('Starting process of marking Reviewed flag');
+const ref = admin.database().ref('MemoryShareGlobal-v1');
 ref.on("value", function (snapshot) {
     snapshot.forEach(element => {
         if (element.val().Reviewed == undefined) {
-            admin.database().ref('MemoryShareGlobal/' + element.key + '/Reviewed').set(false);
+            admin.database().ref('MemoryShareGlobal-v1/' + element.key + '/Reviewed').set(false);
         }
     });
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
-const ref1 = admin.database().ref('FeaturedShare');
+const ref1 = admin.database().ref('FeaturedShare-v1');
 ref1.on("value", function (snapshot) {
     snapshot.forEach(element => {
         if (element.val().Reviewed == undefined) {
-            admin.database().ref('FeaturedShare/' + element.key + '/Reviewed').set(false);
+            admin.database().ref('FeaturedShare-v1/' + element.key + '/Reviewed').set(false);
         }
     });
 }, function (errorObject) {

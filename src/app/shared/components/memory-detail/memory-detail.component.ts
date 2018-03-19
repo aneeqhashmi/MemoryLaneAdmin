@@ -47,15 +47,15 @@ export class MemoryDetailComponent {
   }
 
   addToFeature(){
-    this.af.object('FeaturedShare/'+this.uid).set(this.memory);
+    this.af.object('FeaturedShare-v1/'+this.uid).set(this.memory);
   }
 
   removeFromFeature(){
-    this.af.object('FeaturedShare/'+this.uid).remove();
+    this.af.object('FeaturedShare-v1/'+this.uid).remove();
   }
 
   featureCheck(){
-    this.af.object('FeaturedShare/'+this.uid).valueChanges().subscribe(data=>{
+    this.af.object('FeaturedShare-v1/'+this.uid).valueChanges().subscribe(data=>{
       this.isFeatured = data != null;
     });
   }
@@ -69,20 +69,20 @@ export class MemoryDetailComponent {
   }
 
   markReview(isReviewed){
-    this.af.object('MemoryShareGlobal/'+this.uid+'/Reviewed').set(isReviewed);
-    this.af.object('FeaturedShare/'+this.uid).valueChanges().subscribe(data => {
+    this.af.object('MemoryShareGlobal-v1/'+this.uid+'/Reviewed').set(isReviewed);
+    this.af.object('FeaturedShare-v1/'+this.uid).valueChanges().subscribe(data => {
       if(data != null){
-        this.af.object('FeaturedShare/'+this.uid+'/Reviewed').set(isReviewed);
+        this.af.object('FeaturedShare-v1/'+this.uid+'/Reviewed').set(isReviewed);
       }
     });
-    const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
+    const subObj = this.af.object('MemoryShareGlobal-v1/'+this.uid).valueChanges().subscribe(memory => {
       subObj.unsubscribe();
       this.memory = memory;
     });
   }
 
   getUnreviewedIds(){
-    this.af.list<any>('MemoryShareGlobal', ref => ref.orderByChild('Reviewed').endAt(false,this.uid).limitToLast(2)).snapshotChanges().subscribe(data=>{
+    this.af.list<any>('MemoryShareGlobal-v1', ref => ref.orderByChild('Reviewed').endAt(false,this.uid).limitToLast(2)).snapshotChanges().subscribe(data=>{
       //console.log(data);
       if(data.length > 1){
         if(data[0].payload.val().Reviewed == false)
@@ -94,7 +94,7 @@ export class MemoryDetailComponent {
       } 
     });
     
-    this.af.list<any>('MemoryShareGlobal', ref => ref.orderByChild('Reviewed').startAt(false,this.uid).limitToFirst(2)).snapshotChanges().subscribe(data=>{
+    this.af.list<any>('MemoryShareGlobal-v1', ref => ref.orderByChild('Reviewed').startAt(false,this.uid).limitToFirst(2)).snapshotChanges().subscribe(data=>{
       console.log(data);
       if(data.length > 1){
         if(data[1].payload.val().Reviewed == false)
@@ -110,7 +110,7 @@ export class MemoryDetailComponent {
   getImages(){
     this.spinnerService.show();
     var promises = [];
-    const subObj = this.af.object('MemoryShareGlobal/'+this.uid).valueChanges().subscribe(memory => {
+    const subObj = this.af.object('MemoryShareGlobal-v1/'+this.uid).valueChanges().subscribe(memory => {
       subObj.unsubscribe();
       
       this.memory = memory;

@@ -25,7 +25,7 @@ export class MemoryCardComponent {
     this.key = this.item.key;
     this.value = this.item.payload.val();
 
-    this.af.object('FeaturedShare/'+this.key).valueChanges().subscribe(data=>{
+    this.af.object('FeaturedShare-v1/'+this.key).valueChanges().subscribe(data=>{
       this.isFeatured = data != null;
     });
   }
@@ -33,8 +33,8 @@ export class MemoryCardComponent {
   censorMemory(){
     if(confirm('Are you really want to delete this memory?'))
     {
-      this.af.object('FeaturedShare/'+this.key).remove();
-      this.af.object('MemoryShareGlobal/'+this.key).remove();
+      this.af.object('FeaturedShare-v1/'+this.key).remove();
+      this.af.object('MemoryShareGlobal-v1/'+this.key).remove();
     }
   }
 }
