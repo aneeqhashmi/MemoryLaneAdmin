@@ -22,11 +22,12 @@ export class MemoryDetailComponent {
   uid = '';
   nextUnreviewedId = null;
   prevUnreviewedId = null;
+  option:any;
   
-  constructor(public af: AngularFireDatabase,
+  constructor(private af: AngularFireDatabase,
               private route: ActivatedRoute,
-             public polyManager: PolyManagerService,
-             private spinnerService: Ng4LoadingSpinnerService) {
+              private polyManager: PolyManagerService,
+              private spinnerService: Ng4LoadingSpinnerService) {
     
   }
 
@@ -34,7 +35,8 @@ export class MemoryDetailComponent {
 
     this.route.params.subscribe((params: any) => {
       this.uid = params.uid;
-      
+      this.option = params.option;
+      console.log(this.option);
       this.getImages();
       
       this.featureCheck();

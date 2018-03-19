@@ -2,7 +2,7 @@
   <div style="display: inline-block;">
     <img *ngIf="value.Reviewed == true" src="/assets/reviewed.png" style="width:50px; float:left; margin-top:10px; margin-right:20px;">
     <img *ngIf="value.Reviewed == null || value.Reviewed == false" src="/assets/unreviewed.png" style="width:50px; float:left;  margin-top:10px; margin-right:20px;">
-    <h3 style="float:left;"><a [routerLink]="['/memory',key]">{{value.Name}}</a></h3>  
+    <h3 style="float:left;"><a [routerLink]="['/memory',key,this.option]">{{value.Name}}</a></h3>  
   </div>  
   <!-- <span>Created: {{value.Created * 1000 | amTimeAgo}}</span> -->
   <br *ngIf="value.Modified != null">

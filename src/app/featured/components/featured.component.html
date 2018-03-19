@@ -9,7 +9,7 @@
 <button *ngIf="nextModified != null" (click)="getItems(0,nextModified);">Next Page</button> 
 <ul style="margin-top:10px;" class="list-group">
   <li *ngFor="let item of (items | async)?.reverse()" class="list-group-item">
-    <memory-card [item]="item" ></memory-card>
+    <memory-card [item]="item" [option]=3 ></memory-card>
   </li>
 </ul>
 <button *ngIf="prevModified != null" (click)="getItems(1,prevModified);">Previous Page</button> 

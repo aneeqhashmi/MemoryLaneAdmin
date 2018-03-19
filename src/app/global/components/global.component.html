@@ -3,14 +3,19 @@
   <button *ngIf="prevModified != null" (click)="getItems(1);">Previous Page</button> 
   <button *ngIf="nextModified != null" (click)="getItems(0);">Next Page</button> 
   <div style="float:right;">
-    <input (click)="getItems(0,0)" type="radio" name="filter" checked="checked"> Show All
-    <input (click)="getItems(0,1)" type="radio" name="filter"> Reviewed
-    <input (click)="getItems(0,2)" type="radio" name="filter"> Un Reviewed
+    <input #searchText type="text" placeholder="search by name here" (keyup.enter)="search(searchText.value);">
+    <button style="margin-right: 30px;" (click)="search(searchText.value);">Search</button>
+    <input #showAll (click)="getItems(0,0)" type="radio" name="filter" checked="checked"> Show All
+    <input #reviewed (click)="getItems(0,1)" type="radio" name="filter"> Reviewed
+    <input #unreviewed (click)="getItems(0,2)" type="radio" name="filter"> Un Reviewed
+    <br>
+    <span style="font-size:11px; color:gray;"><i>(It only search with exact name in all categories)</i></span>
   </div>
 </div>
 <ul style="margin-top:10px;" class="list-group">
+  <span *ngIf="(items | async)?.length == 0" >No memory found for selected criteria</span>
   <li *ngFor="let item of (items | async)?.reverse()" class="list-group-item">
-    <memory-card [item]="item" [shouldDisplayFeatureIcon]="true" ></memory-card>
+    <memory-card [item]="item" [shouldDisplayFeatureIcon]="true" [option]="this.option" ></memory-card>
   </li>
 </ul>
 <button *ngIf="prevModified != null" (click)="getItems(1);">Previous Page</button> 

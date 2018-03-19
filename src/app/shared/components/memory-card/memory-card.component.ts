@@ -12,6 +12,7 @@ export class MemoryCardComponent {
   
   @Input() item: any;
   @Input() shouldDisplayFeatureIcon: boolean = false;
+  @Input() option: number = 0;
   key:string;
   value:object;
   isFeatured:boolean = false;

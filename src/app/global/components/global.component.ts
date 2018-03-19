@@ -1,8 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase/app';
+import { validateArgCount } from '@firebase/util/dist/esm/src/validation';
+import { config } from '../../../../functions/node_modules/firebase-functions';
 const pageSize = 10;
 @Component({
   selector: 'global',
@@ -16,15 +19,43 @@ export class GlobalComponent {
   nextModified = null;
   prevModified = null;
   option = 0; // default value is to show all memories
+  @ViewChild('showAll') showAll; 
+  @ViewChild('reviewed') reviewed;
+  @ViewChild('unreviewed') unreviewed;  
+  @ViewChild('searchText') searchText; 
 
-  constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase) {
+  constructor(private afAuth: AngularFireAuth, 
+              private af: AngularFireDatabase,
+              private route: ActivatedRoute) {
+
+  }
+
+  ngOnInit() {
     
-    this.getItems(0,0);
-
+    this.route.params.subscribe((params: any) => {
+      this.option = params.option == undefined || !parseInt(params.option) ? 0 : parseInt(params.option);
+      console.log(params.option + ":" + this.option);
+      switch (this.option) {
+        case 1:
+          this.reviewed.nativeElement.checked = true;
+          break;
+        case 2:
+          this.unreviewed.nativeElement.checked = true;
+          break;
+        default:
+          this.showAll.nativeElement.checked = true;
+          break;
+      }
+      
+      this.getItems(0,this.option);
+    });
   }
 
 
   getItems(direction, option?){
+    if(this.searchText != null)
+      this.searchText.nativeElement.value = '';
+
     if(option != undefined){
       this.option = option;
       this.nextModified = this.prevModified = null;
@@ -99,6 +130,21 @@ export class GlobalComponent {
     });
   }
 
+  search(value){
+    if(this.showAll != null)
+      this.showAll.nativeElement.checked = true;
+    if(value == undefined || value == ''){
+      this.getItems(0,0);
+    } else {
+      this.items = this.af.list<any>('MemoryShareGlobal', ref => ref.orderByChild('Name').equalTo(value).limitToLast(pageSize)).snapshotChanges();
+      this.items.subscribe(data=> {
+        
+        this.prevModified = null;
+        this.nextModified = null;
+  
+      });
+    }
+  }
   
 }
 

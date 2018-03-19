@@ -7,7 +7,8 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 
 const appRoutes: Routes = [
   { path: 'global', component: GlobalComponent, canActivate: [AuthGuard] },
-  { path: 'memory/:uid', component: MemoryDetailComponent, canActivate: [AuthGuard] },
+  { path: 'global/:option', component: GlobalComponent, canActivate: [AuthGuard] },
+  { path: 'memory/:uid/:option', component: MemoryDetailComponent, canActivate: [AuthGuard] },
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);
