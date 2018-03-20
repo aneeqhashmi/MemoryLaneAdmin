@@ -25,9 +25,9 @@ export class FeaturedComponent {
   getItems(option,time){
     
     if(option == 0) // next
-      this.items = this.af.list<any>('FeaturedShare', ref => ref.orderByChild('Modified').endAt(time).limitToLast(10)).snapshotChanges();
+      this.items = this.af.list<any>('FeaturedShare-v1', ref => ref.orderByChild('Modified').endAt(time).limitToLast(10)).snapshotChanges();
     else  // prev
-      this.items = this.af.list<any>('FeaturedShare', ref => ref.orderByChild('Modified').startAt(time).limitToFirst(10)).snapshotChanges();
+      this.items = this.af.list<any>('FeaturedShare-v1', ref => ref.orderByChild('Modified').startAt(time).limitToFirst(10)).snapshotChanges();
     this.items.subscribe(data=> {
       
       if(!(data.length < 10 && this.nextModified == null && this.prevModified == null)){
