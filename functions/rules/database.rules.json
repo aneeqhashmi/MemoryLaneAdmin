@@ -1,0 +1,42 @@
+{
+  "rules": {
+    "UserProfile-v1": {
+      "$userId": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid == $userId"
+      },
+      ".read": "auth != null"
+    },
+    "PersonalShare-v1": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId || root.child('FBFriends-v1').child($userId).child(auth.uid).val() != null",
+        ".write": "auth != null && auth.uid == $userId || newData.parent().parent().child('FBFriends-v1').child($userId).child(auth.uid).val() != null"
+      }
+    },
+    "MemoryShareGlobal-v1": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": [
+        "Modified",
+        "Reviewed"
+      ]
+    },
+    "FeaturedShare-v1": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": [
+        "Modified"
+      ]
+    },
+    "FbToFirebase-v1": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "FBFriends-v1": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId"
+      }
+    }
+  }
+}

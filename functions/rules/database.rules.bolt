@@ -1,0 +1,46 @@
+path /UserProfile-v1 {
+  read() { isAuthUser() }
+  write() { false }
+
+  /{userId} {
+    write(){ isCurrentUser(userId) }
+    read(){ isAuthUser() }
+  }
+}
+
+path /PersonalShare-v1/{userId} {
+  write(){ isCurrentUser(userId) || isFriend(userId) }
+  read(){ isCurrentUser(userId) || isFriend(userId) }
+}
+
+path /MemoryShareGlobal-v1 {
+  write(){ isAuthUser() }
+  read(){ isAuthUser() }
+  index() {["Modified","Reviewed"]}
+}
+
+path /FeaturedShare-v1 {
+  write(){ isAuthUser() }
+  read(){ isAuthUser() }
+  index() {["Modified"]}
+}
+
+path /FbToFirebase-v1 {
+  write(){ isAuthUser() }
+  read(){ isAuthUser() }
+}
+
+path /FBFriends-v1/{userId} {
+  write(){ isCurrentUser(userId) }
+  read(){ isCurrentUser(userId) }
+}
+
+/////////////////////////
+ /****** Functions ******/
+ /////////////////////////
+
+isAuthUser() { auth != null }
+isCurrentUser(uid) { isAuthUser() && auth.uid == uid }
+isFriend(friendId) { ((root["FBFriends-v1"])[friendId])[auth.uid] != null }
+initial(value, init) { value == (isInitial(value) ? init : prior(value)) }
+isInitial(value) { prior(value) == null }
